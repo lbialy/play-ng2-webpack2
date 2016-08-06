@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Tutorial</title>
+</head>
+<body>
+<div>
+    <h2>Play 2.5.4 + Angular 2 RC4 seed with Webpack 2 + SBT - based build</h2>
+
+    <p>This template contains standard distribution of <strong>Play Framework 2.5.4</strong>
+        along with UI built with <strong>Angular 2</strong> (currently RC4).</p>
+
+    <p>Angular 2 application is contained in separate directory <code>ui</code> and is
+        scaffolded using Angular-CLI. Since Angular-CLI webpack-based build is not ready yet,
+        I've decided to provide my own build system for frontend application and chose Webpack 2
+        to do that (mostly to benefit from new feature of tree shaking module resolution to keep
+        application size down). Also I've found WebJars and Sbt-Web based frontend build to be
+        too slow and limited for my liking.</p>
+</div>
+<div>
+    <h2>Build requirements</h2>
+
+    <ul>
+        <li>node: ^6.3.0</li>
+        <li>npm: ^3.10.0</li>
+    </ul>
+
+    <p>These two are required globally at least till I figure out how to handle webpack
+        installation and runs with <code>sbt-js-engine</code>. Even if I succeeded in attempt to
+        base js build on <code>sbt-js-engine</code> it's still recommended to use
+        <code>node</code> for better performance.</p>
+</div>
+<div>
+    <h2>Changes and things to know</h2>
+
+    <p>There are some small albeit important deviations from standard distribution of <strong>PF
+        2.5.4</strong> and they are mostly related to <strong>sbt build</strong> and <strong>testing
+        harness</strong>:</p>
+
+    <ul>
+        <li>scala version was changed to 2.11.8 from 2.11.7</li>
+        <li>all sbt-web plugins were removed from <code>project/plugins.sbt</code> since Webpack
+            now handles frontend build
+        </li>
+        <li>Play run hook <code>UIBuildHook</code> was added to <code>project/</code> - it's job
+            is handling node modules installation via <code>npm</code> and <code>webpack
+                --watch</code> when Play is run in dev mode.
+        </li>
+        <li>
+            <code>build.sbt</code> file contains UI build tasks: npm modules installation and
+            karma tests running along with Play tests
+        </li>
+        <li>
+            <code>ui/dist</code> folder is listed as unmanaged resource directory, therefore
+            both Play running in dev mode and stage/dist packages have access to it's contents
+            via <code>Assets</code> controller. That folder is obviously output directory of
+            Webpack build.
+        </li>
+        <li>
+            <code>IntegrationSpec</code> was removed, as Selenium Webdriver driven E2E tests are
+            useless due to Protractor integration. One is free to test Angular2-free parts of
+            application using browser-based Play testing classes, but I have to warn you that
+            Webdriver kept crashing with cryptic errors when it tried to download `vendor.js´
+            part of Angular 2 app.
+        </li>
+        <li>Protractor testing is handled using <code>ProtractorSpec</code> test class in <code>test</code>.
+            I owe that part to unnamed chinese coder who already battled with the idea of
+            running Protractor tests from SBT and failed, so that I didn't have to. Thank you
+            buddy!
+        </li>
+        <li>Changes in <code>ui</code> folder don't cause Play reloads, but are observed (and
+            handled) by Webpack when Play is running in dev mode.
+        </li>
+    </ul>
+</div>
+<div>
+    <h2>About the Angular 2 app:</h2>
+
+    <ul>
+        <li>don't use ng serve or any other Angular CLI command besides scaffolders (<code>ng
+            generate _</code>), webpack does all the building
+        </li>
+        <li>if you want to serve Angular 2 app without Play you can do so by issuing <code>npm
+            run dev</code> in <code>ui/</code> directory - this will run webpack-dev-server
+            configured to work in dev mode
+        </li>
+        <li>npm dev/dependencies are <a href="https://docs.npmjs.com/cli/shrinkwrap">shrinkwrapped</a>
+            and therefore frozen - we are using bleeding edge here, no guarantees that BC in
+            some beta dependency won't wreck whole frontend build, so better safe than sorry
+            (this actually occured when I was preparing this package). I will try to keep most
+            important libraries (that is: Angular and Webpack) updated but as long as this works
+            I am going to update things in a cool, controlled fashion. Read about adding npm
+            packages to shrinkwrapped projects at <a
+                    href="https://docs.npmjs.com/cli/shrinkwrap">docs</a>.
+        </li>
+        <li>
+            <strong>Important</strong>: I am using <code>angular2-template-loader</code> to
+            inline templates and styles as Angular 2 Webpack guide advised. For component's
+            directory structure:
+        </li>
+    </ul>
+
+    <pre><code>
+        component/some-funny.component.ts
+        component/some-funny.component.html
+        component/some-funny-component.scss
+    </code></pre>
+
+    <p>annotation syntax in file <code>some-funny.component.ts</code>: </p>
+
+    <pre><code>
+        @Component({
+            templateUrl: 'some-funny.component.html',
+            styleUrls: ['some-funny.component.scss']
+        })
+    </code></pre>
+
+    <p>will correctly inline styles and templates. <strong>Beware</strong>: apparently
+        <code>angular2-template-loader</code>
+        resolves template and style urls relatively to component file which contains referencing
+        annotation. This is different to how Angular 2 normally (meaning with System.JS) works
+        where paths should be relative to document root, not to component.</p>
+
+    <ul>
+        <li>As you probably noticed I am also using <a href="http://sass-lang.com/">SASS</a> via
+            <code>sass-loader</code> (cause it's awesome!)
+        </li>
+    </ul>
+</div>
+<div>
+    <h2>Foreword</h2>
+    <p>Feel free to ask questions, post issues and even PRs if you find this seed broken or
+        lacking in any way @ <a href="https://github.com/lbialy/play-ng2-webpack2">repository</a> and happy coding!</p>
+</div>
+</body>
+</html>
