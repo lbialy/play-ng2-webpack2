@@ -32,7 +32,7 @@
     "@angular/compiler-cli": "^0.5.0",
     "@angular/platform-server": "^2.0.0-rc.5",
     "@angular/tsc-wrapped": "^0.2.2",
-    "angular-cli": "^1.0.0-beta.10",
+    "angular-cli": "1.0.0-beta.11-webpack.2",
     "angular2-template-loader": "0.4.0",
     "codelyzer": "0.0.25",
     "compression-webpack-plugin": "^0.3.1",
