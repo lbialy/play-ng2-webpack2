@@ -43,6 +43,10 @@ if (!(process.env.WEBPACK_ENV === 'production')) {
 } else {
     config.plugins = [
         new webpack.optimize.UglifyJsPlugin({
+            mangle: {
+                screw_ie8: true,
+                keep_fnames: true
+            },
             compress: {
                 screw_ie8: true,
                 warnings: false

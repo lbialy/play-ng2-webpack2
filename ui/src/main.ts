@@ -1,11 +1,11 @@
 /// <reference path="typings/webpack.d.ts" />
 
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
-import { AppComponent} from './app/';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {enableProdMode} from '@angular/core';
+import {AppModule} from './app/app.module';
 
 if (WEBPACK_ENV === 'production') {
-  enableProdMode();
+    enableProdMode();
 }
 
-bootstrap(AppComponent);
+platformBrowserDynamic().bootstrapModule(AppModule);

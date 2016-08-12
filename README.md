@@ -1,7 +1,7 @@
-Play 2.5.4 + Angular 2 RC4 seed with Webpack 2 + SBT - based build
-======================================================================
+Play 2.5.4 + Angular 2 RC5 seed with Webpack 2 + SBT - based build
+==================================================================
 
-This template contains standard distribution of **Play Framework 2.5.4** along with UI built with **Angular 2** (currently RC4).
+This template contains standard distribution of **Play Framework 2.5.4** along with UI built with **Angular 2** (currently RC5).
 
 Angular 2 application is contained in separate directory `ui` and is scaffolded using Angular-CLI. Since Angular-CLI webpack-based build is not ready yet, I've decided to provide my own build system for frontend application and chose Webpack 2 to do that (mostly to benefit from new feature of tree shaking module resolution to keep application size down). Also I've found WebJars and Sbt-Web based frontend build to be too slow and limited for my liking.
 
@@ -31,7 +31,7 @@ About the Angular 2 app:
 
 - don't use ng serve or any other Angular CLI command besides scaffolders (`ng generate _`), webpack does all the building
 - if you want to serve Angular 2 app without Play you can do so by issuing `npm run dev` in `ui/` directory - this will run webpack-dev-server configured to work in dev mode
-- npm dev/dependencies are [shrinkwrapped](https://docs.npmjs.com/cli/shrinkwrap) and therefore frozen - we are using bleeding edge here, no guarantees that BC in some beta dependency won't wreck whole frontend build, so better safe than sorry (this actually occured when I was preparing this package). I will try to keep most important libraries (that is: Angular and Webpack) updated but as long as this works I am going to update things in a cool, controlled fashion. Read about adding npm packages to shrinkwrapped projects at [docs](https://docs.npmjs.com/cli/shrinkwrap).
+- ~~npm dev/dependencies are [shrinkwrapped](https://docs.npmjs.com/cli/shrinkwrap) and therefore frozen - we are using bleeding edge here, no guarantees that BC in some beta dependency won't wreck whole frontend build, so better safe than sorry (this actually occured when I was preparing this package). I will try to keep most important libraries (that is: Angular and Webpack) updated but as long as this works I am going to update things in a cool, controlled fashion. Read about adding npm packages to shrinkwrapped projects at [docs](https://docs.npmjs.com/cli/shrinkwrap).~~ Can't shrinkwrap until [tslint issue](https://github.com/palantir/tslint/issues/815#issuecomment-239415216) is resolved. 
 - **Important**: I am using `angular2-template-loader` to inline templates and styles as Angular 2 Webpack guide advised. For component's directory structure:
 ```
 component/some-funny.component.ts
