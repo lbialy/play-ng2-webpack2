@@ -1,53 +1,48 @@
-Play 2.5.4 + Angular 2 RC4 seed with Webpack 2 + SBT - based build
+Play 2.5.12 + Angular 2.x with Angular-CLI + SBT - based build
 ======================================================================
 
-This template contains standard distribution of **Play Framework 2.5.4** along with UI built with **Angular 2** (currently RC4).
+This template contains standard distribution of **Play Framework 2.5.12** along with UI built with **Angular 2.x**.
 
-Angular 2 application is contained in separate directory `ui` and is scaffolded using Angular-CLI. Since Angular-CLI webpack-based build is not ready yet, I've decided to provide my own build system for frontend application and chose Webpack 2 to do that (mostly to benefit from new feature of tree shaking module resolution to keep application size down). Also I've found WebJars and Sbt-Web based frontend build to be too slow and limited for my liking.
+Angular 2 application is contained in separate directory `ui` and is scaffolded using Angular-CLI. I've found WebJars and Sbt-Web based frontend build to be too slow and limited for my liking, so SBT is linked with Angular-CLI to handle frontend build.
 
 Build requirements
 ------------------
 
 - node: ^6.3.0
 - npm: ^3.10.0
+- angular-cli: @latest
+- Chrome (for tests)
 
-These two are required globally at least till I figure out how to handle webpack installation and runs with `sbt-js-engine`. Even if I succeeded in attempt to base js build on `sbt-js-engine` it's still recommended to use `node` for better performance.
+These three are required globally. `sbt-js-engine` will not be supported (and why should it - it's not like you can develop in Angular without node and npm anyway).
 
 Changes and things to know
 --------------------------
 
-There are some small albeit important deviations from standard distribution of **PF 2.5.4** and they are mostly related to **sbt build** and **testing harness**:
+There are some small albeit important deviations from standard distribution of **PF 2.5.12** and they are mostly related to **sbt build** and **testing harness**:
 
 - scala version was changed to 2.11.8 from 2.11.7
-- all sbt-web plugins were removed from `project/plugins.sbt` since Webpack now handles frontend build
-- Play run hook `UIBuildHook` was added to `project/` - it's job is handling node modules installation via `npm` and `webpack --watch` when Play is run in dev mode.
+- all sbt-web plugins were removed from `project/plugins.sbt` since Angular-CLI now handles frontend build
+- Play run hook `UIBuildHook` was added to `project/` - it's job is handling node modules installation via `npm` and `npm run build` when Play is run in dev mode.
 - `build.sbt` file contains UI build tasks: npm modules installation and karma tests running along with Play tests
-- `ui/dist` folder is listed as unmanaged resource directory, therefore both Play running in dev mode and stage/dist packages have access to it's contents via `Assets` controller. That folder is obviously output directory of Webpack build.
-- `IntegrationSpec` was removed, as Selenium Webdriver driven E2E tests are useless due to Protractor integration. One is free to test Angular2-free parts of application using browser-based Play testing classes, but I have to warn you that Webdriver kept crashing with cryptic errors when it tried to download `vendor.js´ part of Angular 2 app.
+- `ui/dist` folder is listed as unmanaged resource directory, therefore both Play running in dev mode and stage/dist packages have access to it's contents via `Assets` controller. That folder is obviously output directory of Angular-CLI build.
+- `IntegrationSpec` was removed, as Selenium Webdriver driven E2E tests are useless due to Protractor integration.
 - Protractor testing is handled using `ProtractorSpec` test class in `test`. I owe that part to unnamed chinese coder who already battled with the idea of running Protractor tests from SBT and failed, so that I didn't have to. Thank you buddy!
-- Changes in `ui` folder don't cause Play reloads, but are observed (and handled) by Webpack when Play is running in dev mode.
+- Changes in `ui` folder don't cause Play reloads, but are observed (and handled) by Angular-CLI when Play is running in dev mode.
+- Protractor and Angular 2 unit tests require Chrome as ChromeDriver is supported out-of-the-box by Angular-CLI (I will work on making phantomjs default headless test-runner again).
 
 About the Angular 2 app:
 
-- don't use ng serve or any other Angular CLI command besides scaffolders (`ng generate _`), webpack does all the building
-- if you want to serve Angular 2 app without Play you can do so by issuing `npm run dev` in `ui/` directory - this will run webpack-dev-server configured to work in dev mode
-- npm dev/dependencies are [shrinkwrapped](https://docs.npmjs.com/cli/shrinkwrap) and therefore frozen - we are using bleeding edge here, no guarantees that BC in some beta dependency won't wreck whole frontend build, so better safe than sorry (this actually occured when I was preparing this package). I will try to keep most important libraries (that is: Angular and Webpack) updated but as long as this works I am going to update things in a cool, controlled fashion. Read about adding npm packages to shrinkwrapped projects at [docs](https://docs.npmjs.com/cli/shrinkwrap).
-- **Important**: I am using `angular2-template-loader` to inline templates and styles as Angular 2 Webpack guide advised. For component's directory structure:
-```
-component/some-funny.component.ts
-component/some-funny.component.html
-component/some-funny-component.scss
-```
-annotation syntax in file `some-funny.component.ts`: 
-```
-@Component({
-  templateUrl: 'some-funny.component.html',
-  styleUrls: ['some-funny.component.scss']
-})
-```
-will correctly inline styles and templates. **Beware**: apparently `angular2-template-loader` resolves template and style urls relatively to component file which contains referencing annotation. This is different to how Angular 2 normally (meaning with System.JS) works where paths should be relative to document root, not to component.
+- If you want to serve Angular 2 app without Play you can do so by issuing `npm run start` in `ui/` directory - this will run `ng serve`
+- As you probably noticed I am using [SASS](http://sass-lang.com/) via Angular-CLI CSS Preprocessors support (cause it's awesome!)
 
-- As you probably noticed I am also using [SASS](http://sass-lang.com/) via `sass-loader` (cause it's awesome!)
+Migration from older version of this seed:
+
+- Rules of [angular-cli update](https://github.com/angular/angular-cli/wiki/Upgrading-from-Beta.10-to-Beta.14) apply to your ui project
+- Try to match the structure of new `ui` directory
+- Refactor tests to use `TestBed` instead of `inject`, use `async` tests for Zone.js async tracking
+- Most probably `main.ts` will need some refactoring to match new one - we're using Angular 2 modules now.
+
+Good luck!
 
 Feel free to ask questions, post issues and even PRs if you find this seed broken or lacking in any way.
 
