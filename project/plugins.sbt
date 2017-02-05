@@ -1,5 +1,5 @@
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.4")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.12")
 
 // web plugins
-// webpack does all heavy lifting :P
+// angular-cli does all heavy lifting :P
