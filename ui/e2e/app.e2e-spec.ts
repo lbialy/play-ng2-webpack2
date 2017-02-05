@@ -7,7 +7,7 @@ describe('ui App', function() {
     page = new UiPage();
   });
 
-  it('should display message saying IT WORKS! - SASS + TS = <3', () => {
+  it('should display message saying app works', () => {
     page.navigateTo();
     expect(page.getParagraphText()).toEqual('IT WORKS! - SASS + TS = <3');
   });

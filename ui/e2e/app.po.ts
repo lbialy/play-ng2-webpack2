@@ -1,3 +1,5 @@
+import { browser, element, by } from 'protractor';
+
 export class UiPage {
   navigateTo() {
     return browser.get('/');

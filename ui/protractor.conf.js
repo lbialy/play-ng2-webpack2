@@ -1,42 +1,32 @@
+// Protractor configuration file, see link for more information
+// https://github.com/angular/protractor/blob/master/lib/config.ts
+
+/*global jasmine */
+var SpecReporter = require('jasmine-spec-reporter');
+
 exports.config = {
-  baseUrl: 'http://localhost:9834/',
-
-  allScriptsTimeout: 10000,
-
-  framework: 'jasmine2',
-
-  jasmineNodeOpts: {
-    defaultTimeoutInterval: 60000,
-    showTiming: true
-  },
-
-  capabilities: {
-    // if anything goes wrong - check if changing this to chrome helps
-    'browserName': 'phantomjs',
-
-     /*
-      * Can be used to specify the phantomjs binary path.
-      * This can generally be ommitted if you installed phantomjs globally.
-      */
-    'phantomjs.binary.path': 'node_modules/phantomjs-prebuilt/bin/phantomjs',
-
-    /*
-     * Command line args to pass to ghostdriver, phantomjs's browser driver.
-     * See https://github.com/detro/ghostdriver#faq
-     */
-    'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG'],
-
-    // for 'browserName': 'chrome'
-    'chromeOptions': {
-      'args': ['show-fps-counter=true']
-    }
-  },
-
+  allScriptsTimeout: 11000,
   specs: [
-    'e2e/**/*.e2e-spec.js'
+    './e2e/**/*.e2e-spec.ts'
   ],
-
+  capabilities: {
+    'browserName': 'chrome'
+  },
+  directConnect: true,
+  baseUrl: 'http://localhost:4200/',
+  framework: 'jasmine',
+  jasmineNodeOpts: {
+    showColors: true,
+    defaultTimeoutInterval: 30000,
+    print: function() {}
+  },
+  useAllAngular2AppRoots: true,
+  beforeLaunch: function() {
+    require('ts-node').register({
+      project: 'e2e'
+    });
+  },
   onPrepare: function() {
-    browser.ignoreSynchronization = true;
+    jasmine.getEnv().addReporter(new SpecReporter());
   }
 };
