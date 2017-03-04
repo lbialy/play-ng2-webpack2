@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-mv dist/inline.*.bundle.js dist/inline.bundle.js
-mv dist/main.*.bundle.js dist/main.bundle.js
-mv dist/main.*.bundle.js.gz dist/main.bundle.js.gz
-mv dist/polyfills.*.bundle.js dist/polyfills.bundle.js
-mv dist/polyfills.*.bundle.js.gz dist/polyfills.bundle.js.gz
-mv dist/styles.*.bundle.css dist/styles.bundle.css
-mv dist/vendor.*.bundle.js dist/vendor.bundle.js
-mv dist/vendor.*.bundle.js.gz dist/vendor.bundle.js.gz
-rm dist/index.html
-rm dist/favicon.ico
+mv $(pwd)/../public/ui/inline.*.bundle.js $(pwd)/../public/ui/inline.bundle.js
+mv $(pwd)/../public/ui/main.*.bundle.js $(pwd)/../public/ui/main.bundle.js
+mv $(pwd)/../public/ui/main.*.bundle.js.gz $(pwd)/../public/ui/main.bundle.js.gz
+mv $(pwd)/../public/ui/polyfills.*.bundle.js $(pwd)/../public/ui/polyfills.bundle.js
+mv $(pwd)/../public/ui/polyfills.*.bundle.js.gz $(pwd)/../public/ui/polyfills.bundle.js.gz
+mv $(pwd)/../public/ui/styles.*.bundle.css $(pwd)/../public/ui/styles.bundle.css
+mv $(pwd)/../public/ui/vendor.*.bundle.js $(pwd)/../public/ui/vendor.bundle.js
+mv $(pwd)/../public/ui/vendor.*.bundle.js.gz $(pwd)/../public/ui/vendor.bundle.js.gz
+rm $(pwd)/../public/ui/index.html
+rm $(pwd)/../public/ui/favicon.ico

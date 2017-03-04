@@ -1,4 +1,4 @@
-@(title: String, devMode: Boolean)
+@(title: String)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,9 +7,7 @@
         @* Global stylesheet from public directory *@
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")"/>
         @* Stylesheet bundle containing component styles for Angular app *@
-        @if(!devMode) {
-            <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("styles.bundle.css")"/>
-        }
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("ui/styles.bundle.css")"/>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")"/>
     </head>
     <body>
@@ -17,12 +15,9 @@
         <app-root>Loading...</app-root>
 
         @* Built Angular bundles *@
-        <script src="@routes.Assets.versioned("inline.bundle.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.versioned("polyfills.bundle.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.versioned("vendor.bundle.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.versioned("main.bundle.js")" type="text/javascript"></script>
-        @if(devMode) {
-            <script src="@routes.Assets.versioned("styles.bundle.js")" type="text/javascript"></script>
-        }
+        <script src="@routes.Assets.versioned("ui/inline.bundle.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("ui/polyfills.bundle.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("ui/vendor.bundle.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("ui/main.bundle.js")" type="text/javascript"></script>
     </body>
 </html>

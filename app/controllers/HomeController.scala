@@ -18,7 +18,7 @@ class HomeController @Inject()(environment: Environment) extends Controller {
    * a path of `/`.
    */
   def index = Action {
-    Ok(views.html.index("Your new Play & Angular 2 application is ready.", environment.mode == Mode.Dev))
+    Ok(views.html.index("Your new Play & Angular 2 application is ready."))
   }
 
 }

@@ -17,7 +17,7 @@ class ProtractorSpec extends PlaySpec with OneServerPerSuite {
       val resp = Await.result(wsClient.url(baseUrl).get(), 2.seconds)
       resp.status must be(200)
 
-      println(s"Executing protractor using command: 'npm run e2e -- --baseUrl $baseUrl")
+      println(s"Executing protractor using command: 'npm run play-e2e -- --baseUrl $baseUrl")
 
       runProtractorTests(baseUrl) must be(0)
     }
@@ -25,7 +25,7 @@ class ProtractorSpec extends PlaySpec with OneServerPerSuite {
   }
 
   private def runProtractorTests(baseUrl: String): Int = {
-    Process(s"npm run e2e -- --baseUrl $baseUrl", app.getFile("ui"))
+    Process(s"npm run play-e2e -- --baseUrl $baseUrl", app.getFile("ui"))
       .run(pipingInputAndOutput)
       .exitValue()
   }

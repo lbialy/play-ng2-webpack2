@@ -26,8 +26,6 @@ fork in run := true
 val Success = 0 // 0 exit code
 val Error = 1 // 1 exit code
 
-unmanagedResourceDirectories in Assets += (baseDirectory.value / "ui" / "dist")
-
 PlayKeys.playRunHooks <+= baseDirectory.map(UIBuild.apply)
 
 def runScript(script: String)(implicit dir: File): Int = Process(script, dir) !
