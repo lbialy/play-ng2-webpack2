@@ -8,9 +8,9 @@ Angular 2 application is contained in separate directory `ui` and is scaffolded 
 Build requirements
 ------------------
 
-- node: ^6.3.0
+- node: ^6.9.0
 - npm: ^3.10.0
-- angular-cli: @latest
+- angular-cli: ^1.0.0.rc.1 / @latest
 - Chrome (for tests)
 
 These three are required globally. `sbt-js-engine` will not be supported (and why should it - it's not like you can develop in Angular without node and npm anyway).
@@ -24,7 +24,6 @@ There are some small albeit important deviations from standard distribution of *
 - all sbt-web plugins were removed from `project/plugins.sbt` since Angular-CLI now handles frontend build
 - Play run hook `UIBuildHook` was added to `project/` - it's job is handling node modules installation via `npm` and `npm run build` when Play is run in dev mode.
 - `build.sbt` file contains UI build tasks: npm modules installation and karma tests running along with Play tests
-- `ui/dist` folder is listed as unmanaged resource directory, therefore both Play running in dev mode and stage/dist packages have access to it's contents via `Assets` controller. That folder is obviously output directory of Angular-CLI build.
 - `IntegrationSpec` was removed, as Selenium Webdriver driven E2E tests are useless due to Protractor integration.
 - Protractor testing is handled using `ProtractorSpec` test class in `test`. I owe that part to unnamed chinese coder who already battled with the idea of running Protractor tests from SBT and failed, so that I didn't have to. Thank you buddy!
 - Changes in `ui` folder don't cause Play reloads, but are observed (and handled) by Angular-CLI when Play is running in dev mode.
@@ -34,6 +33,11 @@ About the Angular 2 app:
 
 - If you want to serve Angular 2 app without Play you can do so by issuing `npm run start` in `ui/` directory - this will run `ng serve`
 - As you probably noticed I am using [SASS](http://sass-lang.com/) via Angular-CLI CSS Preprocessors support (cause it's awesome!)
+
+Migration from beta angular-cli version of this seed (*pre-march 2017*):
+- Rules of [angular-cli rc update](https://github.com/angular/angular-cli/wiki/stories-rc-update) apply to your ui project, check commit log to see changed files
+- Dropped silly dev flag passed to index view as I managed to find (duh!) `--extract-css` in Angular CLI's docs
+- Moved UI build output to `public/ui` directory to handle Issue #4 related to Play not refreshing files from unmanaged sources. That requires small changes in path given to Assets controller in Play views serving Angular App.
 
 Migration from older version of this seed:
 
