@@ -9,13 +9,22 @@ object UIBuild {
 
       var process: Option[Process] = None
 
+      var npmInstall: String = "npm install"
+      var npmRun: String = "npm run build -- --watch"
+
+      // Windows requires npm commands prefixed with cmd /c
+      if (System.getProperty("os.name").toLowerCase().contains("win")){
+        npmInstall = "cmd /c" + npmInstall
+        npmRun = "cmd /c" + npmRun
+      }
+
       override def beforeStarted(): Unit = {
-        if (!(base / "ui" / "node_modules").exists()) Process("npm install", base / "ui").!
+        if (!(base / "ui" / "node_modules").exists()) Process(npmInstall, base / "ui").!
       }
 
       override def afterStarted(addr: InetSocketAddress): Unit = {
         process = Option(
-          Process("npm run build -- --watch", base / "ui").run
+          Process(npmRun, base / "ui").run
         )
       }
 
