@@ -25,7 +25,11 @@ class ProtractorSpec extends PlaySpec with OneServerPerSuite {
   }
 
   private def runProtractorTests(baseUrl: String): Int = {
-    Process(s"npm run play-e2e -- --baseUrl $baseUrl", app.getFile("ui"))
+    var runProtractor: String = "npm run play-e2e -- --baseUrl " + baseUrl
+    if (System.getProperty("os.name").toLowerCase().contains("win")){
+      runProtractor = "cmd /c " + runProtractor
+    }
+    Process(runProtractor, app.getFile("ui"))
       .run(pipingInputAndOutput)
       .exitValue()
   }

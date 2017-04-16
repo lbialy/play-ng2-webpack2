@@ -28,7 +28,10 @@ val Error = 1 // 1 exit code
 
 PlayKeys.playRunHooks <+= baseDirectory.map(UIBuild.apply)
 
-def runScript(script: String)(implicit dir: File): Int = Process(script, dir) !
+val isWindows = System.getProperty("os.name").toLowerCase().contains("win")
+
+def runScript(script: String)(implicit dir: File): Int = {
+if(isWindows){ Process("cmd /c " + script, dir) } else { Process(script, dir) } }!
 
 def uiWasInstalled(implicit dir: File): Boolean = (dir / "node_modules").exists()
 
