@@ -12,7 +12,8 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
+  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
+  guice
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
@@ -26,7 +27,7 @@ fork in run := true
 val Success = 0 // 0 exit code
 val Error = 1 // 1 exit code
 
-PlayKeys.playRunHooks <+= baseDirectory.map(UIBuild.apply)
+PlayKeys.playRunHooks += baseDirectory.map(UIBuild.apply).value
 
 val isWindows = System.getProperty("os.name").toLowerCase().contains("win")
 
@@ -69,10 +70,10 @@ lazy val `ui-test` = TaskKey[Unit]("Run UI tests when testing application.")
   if (runUiTests != 0) throw new Exception("UI tests failed!")
 }
 
-`ui-test` <<= `ui-test` dependsOn `ui-dev-build`
+`ui-test` := (`ui-test` dependsOn `ui-dev-build`).value
 
-dist <<= dist dependsOn `ui-prod-build`
+dist := (dist dependsOn `ui-prod-build`).value
 
-stage <<= stage dependsOn `ui-prod-build`
+stage := (stage dependsOn `ui-prod-build`).value
 
-test <<= (test in Test) dependsOn `ui-test`
+test := ((test in Test) dependsOn `ui-test`).value

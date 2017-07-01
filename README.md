@@ -1,7 +1,7 @@
-Play 2.5.12 + Angular 2.x with Angular-CLI + SBT - based build
+Play 2.6.0 + Angular 2.x with Angular-CLI + SBT - based build
 ======================================================================
 
-This template contains standard distribution of **Play Framework 2.5.12** along with UI built with **Angular 2.x**.
+This template contains standard distribution of **Play Framework 2.6.0** along with UI built with **Angular 2.x**.
 
 Angular 2 application is contained in separate directory `ui` and is scaffolded using Angular-CLI. I've found WebJars and Sbt-Web based frontend build to be too slow and limited for my liking, so SBT is linked with Angular-CLI to handle frontend build.
 
@@ -18,8 +18,9 @@ These three are required globally. `sbt-js-engine` will not be supported (and wh
 Changes and things to know
 --------------------------
 
-There are some small albeit important deviations from standard distribution of **PF 2.5.12** and they are mostly related to **sbt build** and **testing harness**:
+There are some small albeit important deviations from standard distribution of **PF 2.6.0** and they are mostly related to **sbt build** and **testing harness**:
 
+- sbt version was changed to 0.13.15 from 0.13.11
 - scala version was changed to 2.11.8 from 2.11.7
 - all sbt-web plugins were removed from `project/plugins.sbt` since Angular-CLI now handles frontend build
 - Play run hook `UIBuildHook` was added to `project/` - it's job is handling node modules installation via `npm` and `npm run build` when Play is run in dev mode.
