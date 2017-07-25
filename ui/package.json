@@ -11,7 +11,6 @@
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "ng e2e",
     "play-e2e": "protractor",
-    "postinstall": "chmod +x normalize_file_names.sh",
     "test-no-watch": "ng test --single-run",
     "build": "ng build --extract-css --progress --output-path ../public/ui",
     "build-prod": "ng build --output-hashing none --extract-css --progress --prod --aot --output-path ../public/ui"
