@@ -1,7 +1,7 @@
-Play 2.6.0 + Angular 2.x with Angular-CLI + SBT - based build
+Play 2.6.0 + Angular with Angular-CLI + SBT - based build
 ======================================================================
 
-This template contains standard distribution of **Play Framework 2.6.0** along with UI built with **Angular 2.x**.
+This template contains standard distribution of **Play Framework 2.6.0** along with UI built with **Angular** (possibly latest).
 
 Angular 2 application is contained in separate directory `ui` and is scaffolded using Angular-CLI. I've found WebJars and Sbt-Web based frontend build to be too slow and limited for my liking, so SBT is linked with Angular-CLI to handle frontend build.
 
